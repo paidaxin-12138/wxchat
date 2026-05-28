@@ -1,0 +1,126 @@
+.details-page {
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.filter-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.picker-value {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2E7D32;
+}
+
+.record-list {
+  padding: 0 24rpx;
+}
+
+.record-wrap {
+  margin-bottom: 16rpx;
+  position: relative;
+  height: 140rpx;
+}
+
+.movable-area {
+  width: 100%;
+  height: 140rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
+}
+
+.movable-view {
+  width: calc(100% + 120rpx);
+  height: 140rpx;
+  z-index: 2;
+}
+
+.record-card {
+  width: calc(100vw - 48rpx);
+  height: 140rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.record-icon {
+  font-size: 44rpx;
+  margin-right: 20rpx;
+}
+
+.record-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.record-time {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.record-desc {
+  font-size: 28rpx;
+  color: #333333;
+  margin-top: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-money {
+  font-size: 32rpx;
+  margin-left: 16rpx;
+}
+
+.delete-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 120rpx;
+  height: 140rpx;
+  background: #E53935;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  border-radius: 0 20rpx 20rpx 0;
+  z-index: 1;
+}
+
+.footer-total {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: calc(24rpx + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  z-index: 10;
+}
+
+.footer-label {
+  font-size: 28rpx;
+  color: #666666;
+}
+
+.footer-amount {
+  font-size: 40rpx;
+  font-weight: 700;
+}

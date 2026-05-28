@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/details/details",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTitleText": "摸鱼经济学",
+    "navigationBarBackgroundColor": "#E8F5E9",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F7F0",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8A9A8A",
+    "selectedColor": "#2E7D32",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "主页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/details/details",
+        "text": "明细",
+        "iconPath": "images/tab-details.png",
+        "selectedIconPath": "images/tab-details-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

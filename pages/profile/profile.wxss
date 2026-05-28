@@ -1,0 +1,117 @@
+.profile-page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+}
+
+.user-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 32rpx;
+  margin-top: 16rpx;
+}
+
+.avatar-btn {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  line-height: 1;
+}
+
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  background: #E8F5E9;
+  border: 4rpx solid #C8E6C9;
+}
+
+.nickname-input {
+  margin-top: 20rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1B5E20;
+  text-align: center;
+}
+
+.salary-hint {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #689F38;
+}
+
+.section-title {
+  padding: 24rpx 32rpx 8rpx;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.settings-card {
+  margin-top: 8rpx;
+  padding: 0 32rpx;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.setting-right {
+  display: flex;
+  align-items: center;
+}
+
+.setting-value {
+  font-size: 28rpx;
+  color: #2E7D32;
+  font-weight: 500;
+  margin-right: 8rpx;
+}
+
+.setting-arrow {
+  font-size: 32rpx;
+  color: #CCCCCC;
+}
+
+.danger-item {
+  justify-content: center;
+}
+
+.danger-text {
+  color: #C62828;
+}
+
+.about-card {
+  margin-top: 24rpx;
+}
+
+.about-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1B5E20;
+  margin-bottom: 16rpx;
+}
+
+.about-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.7;
+}

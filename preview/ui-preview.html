@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>摸鱼经济学 - UI 预览</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+      background: #2c3e2c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px;
+      color: #333;
+    }
+    h1 {
+      color: #E8F5E9;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .hint {
+      color: #A5D6A7;
+      font-size: 13px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .tabs-out {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tabs-out button {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.15);
+      color: #C8E6C9;
+    }
+    .tabs-out button.active {
+      background: #66BB6A;
+      color: #fff;
+      font-weight: 600;
+    }
+    .phone {
+      width: 375px;
+      height: 720px;
+      background: #F5F7F0;
+      border-radius: 36px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 8px solid #1a1a1a;
+      position: relative;
+    }
+    .status-bar {
+      height: 44px;
+      background: #E8F5E9;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+    }
+    .screen {
+      flex: 1;
+      overflow-y: auto;
+      display: none;
+      padding-bottom: 8px;
+    }
+    .screen.active { display: block; }
+    .tab-bar {
+      height: 56px;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      flex-shrink: 0;
+    }
+    .tab-bar .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #8A9A8A;
+      cursor: pointer;
+      gap: 2px;
+    }
+    .tab-bar .tab.on { color: #2E7D32; font-weight: 600; }
+    .tab-bar .tab span.icon { font-size: 20px; }
+
+    /* shared */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(46,125,50,0.08);
+      margin: 12px 16px;
+      padding: 16px;
+    }
+    .money-green { color: #2E7D32; font-weight: 600; }
+
+    /* home */
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0 8px;
+    }
+    .month-nav-btn {
+      width: 32px; height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background: #E8F5E9;
+      border-radius: 50%;
+      color: #2E7D32;
+      font-size: 20px;
+    }
+    .month-nav-label {
+      margin: 0 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1B5E20;
+    }
+    .ball-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0 24px;
+    }
+    .money-ball {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #FFD54F 0%, #66BB6A 45%, #2E7D32 100%);
+      box-shadow: 0 8px 24px rgba(46,125,50,0.35),
+        inset 0 -4px 12px rgba(0,0,0,0.08),
+        inset 0 4px 12px rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ transform: scale(1); }
+      50%{ transform: scale(1.02); }
+    }
+    .ball-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .ball-hint {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #689F38;
+    }
+    .action-row {
+      display: flex;
+      padding: 0 16px 16px;
+      gap: 10px;
+    }
+    .action-btn {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(46,125,50,0.12);
+      cursor: pointer;
+    }
+    .action-btn .emoji { font-size: 28px; display: block; }
+    .action-btn .label {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #2E7D32;
+      font-weight: 500;
+    }
+    .tip-title { font-size: 15px; font-weight: 600; color: #1B5E20; margin-bottom: 6px; }
+    .tip-text { font-size: 13px; color: #666; line-height: 1.6; }
+
+    /* details */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .filter-label { font-size: 14px; color: #666; }
+    .picker-value { font-size: 15px; font-weight: 600; color: #2E7D32; }
+    .record-card {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      background: #fff;
+      border-radius: 10px;
+      margin: 0 16px 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .record-icon { font-size: 22px; margin-right: 12px; }
+    .record-body { flex: 1; min-width: 0; }
+    .record-time { font-size: 12px; color: #999; }
+    .record-desc { font-size: 14px; margin-top: 2px; }
+    .record-money { font-size: 16px; }
+    .footer-total {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px;
+    }
+    .footer-amount { font-size: 22px; font-weight: 700; }
+
+    /* profile */
+    .user-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    .avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #A5D6A7, #66BB6A);
+      border: 2px solid #C8E6C9;
+    }
+    .nickname {
+      margin-top: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #1B5E20;
+    }
+    .salary-hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #689F38;
+    }
+    .section-title {
+      padding: 12px 16px 4px;
+      font-size: 13px;
+      color: #999;
+    }
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .setting-item:last-child { border-bottom: none; }
+    .setting-value { color: #2E7D32; font-weight: 500; }
+    .danger { color: #C62828; text-align: center; width: 100%; }
+    .about-title { font-size: 15px; font-weight: 600; color: #1B5E20; margin-bottom: 8px; }
+    .about-text { font-size: 13px; color: #666; line-height: 1.7; }
+
+    /* modal preview strip */
+    .modal-demo {
+      margin: 12px 16px;
+      background: rgba(0,0,0,0.45);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .modal-panel-demo {
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 20px 16px;
+    }
+    .modal-title {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 600;
+      color: #1B5E20;
+      margin-bottom: 16px;
+    }
+    .form-label { font-size: 13px; color: #666; margin-bottom: 6px; }
+    .form-input {
+      background: #F5F7F0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      border: none;
+      width: 100%;
+    }
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #66BB6A, #2E7D32);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(46,125,50,0.25);
+    }
+    .cup-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .cup-btn {
+      flex: 1; text-align: center; padding: 10px;
+      background: #F5F7F0; border-radius: 8px;
+      font-size: 14px;
+    }
+    .cup-active {
+      background: #E8F5E9; color: #2E7D32;
+      border: 1px solid #66BB6A; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>摸鱼经济学 · UI 预览</h1>
+  <p class="hint">在浏览器中查看三页布局（与小程序一致）。真机效果请用微信开发者工具打开项目。</p>
+
+  <div class="tabs-out">
+    <button class="active" data-screen="home">主页</button>
+    <button data-screen="details">明细</button>
+    <button data-screen="profile">我的</button>
+    <button data-screen="modal">弹窗示例</button>
+  </div>
+
+  <div class="phone">
+    <div class="status-bar" id="nav-title">摸鱼经济学</div>
+
+    <!-- 主页 -->
+    <div class="screen active" id="screen-home">
+      <div class="month-nav">
+        <div class="month-nav-btn">‹</div>
+        <span class="month-nav-label">2026年5月</span>
+        <div class="month-nav-btn">›</div>
+      </div>
+      <div class="ball-section">
+        <div class="money-ball">
+          <span class="ball-amount">¥12.58</span>
+        </div>
+        <span class="ball-hint">本月摸鱼赚了</span>
+      </div>
+      <div class="action-row">
+        <div class="action-btn"><span class="emoji">🚽</span><span class="label">上厕所</span></div>
+        <div class="action-btn"><span class="emoji">💧</span><span class="label">喝水</span></div>
+        <div class="action-btn"><span class="emoji">⚡</span><span class="label">充电</span></div>
+      </div>
+      <div class="card">
+        <div class="tip-title">摸鱼经济学</div>
+        <div class="tip-text">带薪拉屎、喝水、充电——把碎片时间变成真金白银。时薪来自你的月薪设置，在「我的」里可调整。</div>
+      </div>
+      <p style="text-align:center;font-size:11px;color:#9E9E9E;padding:4px 16px 12px">该程序也是本人摸鱼做出来的，祝各位摸鱼愉快</p>
+    </div>
+
+    <!-- 明细 -->
+    <div class="screen" id="screen-details">
+      <div class="card filter-bar">
+        <span class="filter-label">筛选月份</span>
+        <span class="picker-value">2026年5月 ▾</span>
+      </div>
+      <div class="record-card">
+        <span class="record-icon">🚽</span>
+        <div class="record-body">
+          <div class="record-time">05-27 10:30</div>
+          <div class="record-desc">带薪拉屎 8 分钟</div>
+        </div>
+        <span class="record-money money-green">+¥6.06</span>
+      </div>
+      <div class="record-card">
+        <span class="record-icon">💧</span>
+        <div class="record-body">
+          <div class="record-time">05-27 12:30</div>
+          <div class="record-desc">喝水 600ml</div>
+        </div>
+        <span class="record-money money-green">+¥0.30</span>
+      </div>
+      <div class="record-card" style="opacity:0.85">
+        <span class="record-icon">⚡</span>
+        <div class="record-body">
+          <div class="record-time">05-28 14:00</div>
+          <div class="record-desc">充电 45分钟 20W</div>
+        </div>
+        <span class="record-money money-green">+¥0.09</span>
+      </div>
+      <p style="text-align:center;font-size:12px;color:#999;margin:8px">← 左滑记录可露出红色「删除」按钮</p>
+      <div class="card footer-total">
+        <span>2026年5月 摸鱼总计</span>
+        <span class="footer-amount money-green">¥12.58</span>
+      </div>
+    </div>
+
+    <!-- 我的 -->
+    <div class="screen" id="screen-profile">
+      <div class="card user-card">
+        <div class="avatar"></div>
+        <div class="nickname">摸鱼达人</div>
+        <div class="salary-hint">时薪约 ¥45.45 · 每分钟 ¥0.7576</div>
+      </div>
+      <div class="section-title">收益参数设置</div>
+      <div class="card" style="margin-top:0;padding:0 16px">
+        <div class="setting-item"><span>月薪（元）</span><span class="setting-value">8000 ›</span></div>
+        <div class="setting-item"><span>每月工作天数</span><span class="setting-value">22 ›</span></div>
+        <div class="setting-item"><span>每日工作小时</span><span class="setting-value">8 ›</span></div>
+        <div class="setting-item"><span>桶装水单价（元/升）</span><span class="setting-value">0.5 ›</span></div>
+        <div class="setting-item"><span>电费单价（元/度）</span><span class="setting-value">0.6 ›</span></div>
+        <div class="setting-item"><span>默认充电器功率（瓦）</span><span class="setting-value">20 ›</span></div>
+      </div>
+      <div class="section-title">数据管理</div>
+      <div class="card" style="margin-top:0;padding:0 16px">
+        <div class="setting-item"><span class="danger">清空所有摸鱼记录</span></div>
+        <div class="setting-item"><span>导出数据（JSON）</span><span>›</span></div>
+      </div>
+      <div class="card">
+        <div class="about-title">关于 · 摸鱼经济学 v1.0.0</div>
+        <div class="about-text">带薪拉屎、喝水、充电——把上班碎片时间量化成「真实收益」……</div>
+      </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="screen" id="screen-modal">
+      <p style="padding:16px;font-size:13px;color:#666;text-align:center">点击主页三个按钮后，从底部弹出半屏面板：</p>
+      <div class="modal-demo">
+        <div class="modal-panel-demo">
+          <div class="modal-title">💧 带薪喝水</div>
+          <div class="form-label">选择杯数（1杯=300ml）</div>
+          <div class="cup-row">
+            <div class="cup-btn">1杯</div>
+            <div class="cup-btn cup-active">2杯</div>
+            <div class="cup-btn">3杯</div>
+          </div>
+          <div class="form-label">或自定义毫升</div>
+          <input class="form-input" value="600" readonly />
+          <button class="btn-primary">确认摸鱼</button>
+        </div>
+      </div>
+      <div class="modal-demo" style="margin-top:8px">
+        <div class="modal-panel-demo">
+          <div class="modal-title">⚡ 带薪充电</div>
+          <div class="form-label">充电时长（分钟）</div>
+          <input class="form-input" value="45" readonly />
+          <div class="form-label">充电器功率（瓦）</div>
+          <input class="form-input" value="20" readonly />
+          <p style="text-align:center;margin-bottom:12px;font-size:14px;color:#666">预估收益：<span class="money-green">+¥0.09</span></p>
+          <button class="btn-primary">确认摸鱼</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tab on" data-go="home"><span class="icon">🏠</span>主页</div>
+      <div class="tab" data-go="details"><span class="icon">📋</span>明细</div>
+      <div class="tab" data-go="profile"><span class="icon">👤</span>我的</div>
+    </div>
+  </div>
+
+  <script>
+    const titles = { home: '摸鱼经济学', details: '摸鱼明细', profile: '我的', modal: '弹窗示例' };
+    function show(name) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + name).classList.add('active');
+      document.getElementById('nav-title').textContent = titles[name] || '摸鱼经济学';
+      document.querySelectorAll('.tabs-out button').forEach(b => {
+        b.classList.toggle('active', b.dataset.screen === name);
+      });
+      document.querySelectorAll('.tab-bar .tab').forEach(t => {
+        t.classList.toggle('on', t.dataset.go === name);
+      });
+    }
+    document.querySelectorAll('.tabs-out button').forEach(b => {
+      b.addEventListener('click', () => show(b.dataset.screen));
+    });
+    document.querySelectorAll('.tab-bar .tab').forEach(t => {
+      t.addEventListener('click', () => show(t.dataset.go));
+    });
+  </script>
+</body>
+</html>

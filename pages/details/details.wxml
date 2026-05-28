@@ -1,0 +1,34 @@
+<view class="details-page">
+  <view class="filter-bar card">
+    <text class="filter-label">筛选月份</text>
+    <picker mode="date" fields="month" value="{{pickerValue}}" bindchange="onMonthChange">
+      <view class="picker-value">{{monthLabel}} ▾</view>
+    </picker>
+  </view>
+
+  <block wx:if="{{records.length > 0}}">
+    <view class="record-list">
+      <view class="record-wrap" wx:for="{{records}}" wx:key="id">
+        <movable-area class="movable-area">
+          <movable-view class="movable-view" direction="horizontal" x="{{swipeOffsets[item.id] || 0}}" damping="50" friction="10" out-of-bounds data-id="{{item.id}}" bindchange="onSwipeChange">
+            <view class="record-card">
+              <text class="record-icon">{{item.icon}}</text>
+              <view class="record-body">
+                <text class="record-time">{{item.shortTime}}</text>
+                <text class="record-desc">{{item.detailDesc}}</text>
+              </view>
+              <text class="record-money money-green">+¥{{item.moneyStr}}</text>
+            </view>
+          </movable-view>
+          <view class="delete-btn" data-id="{{item.id}}" bindtap="onDeleteTap">删除</view>
+        </movable-area>
+      </view>
+    </view>
+  </block>
+  <view wx:else class="empty-tip">本月还没有摸鱼记录，去主页开始吧~</view>
+
+  <view class="footer-total card">
+    <text class="footer-label">{{monthLabel}} 摸鱼总计</text>
+    <text class="footer-amount money-green">¥{{monthTotal}}</text>
+  </view>
+</view>
