@@ -65,4 +65,9 @@ wxchat/
 
 ## 许可证
 
-个人学习 / 非商业用途。如需开源协议可自行补充。
+本项目采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)（署名-非商业性使用）协议。
+
+- 允许：查看、学习、非商业分享与修改（需署名）
+- 禁止：未经作者许可的商业使用
+
+详见 [LICENSE](LICENSE)。
