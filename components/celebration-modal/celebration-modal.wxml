@@ -1,0 +1,16 @@
+<view class="cele-mask" wx:if="{{show}}" catchtouchmove="true">
+  <view class="confetti-wrap">
+    <view class="confetti c1"></view>
+    <view class="confetti c2"></view>
+    <view class="confetti c3"></view>
+    <view class="confetti c4"></view>
+    <view class="confetti c5"></view>
+    <view class="confetti c6"></view>
+  </view>
+  <view class="cele-panel">
+    <text class="cele-emoji">{{kind === 'rank' ? '🏆' : '🎖️'}}</text>
+    <text class="cele-title">{{title}}</text>
+    <text class="cele-sub">{{subtitle}}</text>
+    <button class="cele-btn" bindtap="onClose">太棒了</button>
+  </view>
+</view>

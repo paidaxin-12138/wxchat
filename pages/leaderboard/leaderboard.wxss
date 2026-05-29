@@ -1,0 +1,161 @@
+.leaderboard-page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+}
+
+.hero {
+  text-align: center;
+  padding: 36rpx 32rpx;
+  margin-top: 16rpx;
+}
+
+.hero-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1B5E20;
+}
+
+.hero-sub {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #689F38;
+  line-height: 1.6;
+}
+
+.tabs {
+  display: flex;
+  margin: 16rpx 24rpx 0;
+  background: #E8F5E9;
+  border-radius: 16rpx;
+  padding: 6rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 28rpx;
+  color: #689F38;
+  border-radius: 12rpx;
+}
+
+.tab-active {
+  background: #FFFFFF;
+  color: #1B5E20;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(46, 125, 50, 0.12);
+}
+
+.week-label {
+  padding: 20rpx 32rpx 8rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.rank-list {
+  margin-top: 8rpx;
+  padding: 8rpx 24rpx;
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 8rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.rank-row:last-child {
+  border-bottom: none;
+}
+
+.rank-no {
+  width: 56rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #2E7D32;
+  text-align: center;
+}
+
+.rank-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #E8F5E9;
+  margin-right: 16rpx;
+}
+
+.rank-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rank-name {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.rank-badge {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: #C62828;
+}
+
+.rank-money {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.load-more {
+  text-align: center;
+  padding: 24rpx 0 8rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.my-rank {
+  margin-top: 16rpx;
+}
+
+.my-rank-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.my-rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.my-rank-no {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1B5E20;
+}
+
+.my-rank-money {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.settle-btn {
+  margin-top: 24rpx;
+  font-size: 26rpx;
+  background: linear-gradient(135deg, #66BB6A, #2E7D32);
+  color: #fff;
+  border-radius: 40rpx;
+  padding: 16rpx 40rpx;
+  border: none;
+  line-height: 1.4;
+}
+
+.settle-btn::after {
+  border: none;
+}

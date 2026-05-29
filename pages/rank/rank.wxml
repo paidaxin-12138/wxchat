@@ -1,0 +1,30 @@
+<view class="rank-page">
+  <view class="total-card card">
+    <text class="total-label">历史累计摸鱼金额</text>
+    <text class="total-val">¥{{totalMoney}}</text>
+    <text class="rank-now">当前段位：{{rankTitle}}</text>
+  </view>
+
+  <view class="section-title">段位列表</view>
+  <view class="rank-list card">
+    <view class="rank-item {{item.unlocked ? 'unlocked' : 'locked'}}" wx:for="{{ranks}}" wx:key="id">
+      <text class="rank-id">Lv.{{item.id}}</text>
+      <view class="rank-body">
+        <text class="rank-name">{{item.title}}</text>
+        <text class="rank-th">门槛 ¥{{item.threshold}}</text>
+      </view>
+      <text class="rank-status">{{item.unlocked ? '✓' : '🔒'}}</text>
+    </view>
+  </view>
+
+  <view class="section-title">成就列表</view>
+  <view class="badge-list card">
+    <view class="badge-item" wx:for="{{badges}}" wx:key="id">
+      <text class="badge-icon">{{item.achieved ? '✓' : '🔒'}}</text>
+      <view class="badge-body">
+        <text class="badge-name">{{item.name}}</text>
+        <text class="badge-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+</view>

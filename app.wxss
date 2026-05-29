@@ -1,3 +1,5 @@
+@import './styles/iconfont.wxss';
+
 page {
   background-color: #F5F7F0;
   color: #333333;
@@ -19,13 +21,12 @@ page {
   color: #FFFFFF;
   border-radius: 48rpx;
   font-size: 30rpx;
+  font-weight: 600;
   border: none;
   box-shadow: 0 8rpx 20rpx rgba(46, 125, 50, 0.25);
 }
 
-.btn-primary::after {
-  border: none;
-}
+.btn-primary::after { border: none; }
 
 .btn-primary:active {
   opacity: 0.85;
@@ -40,26 +41,23 @@ page {
   border: 2rpx solid #C8E6C9;
 }
 
-.btn-ghost::after {
-  border: none;
-}
+.btn-ghost::after { border: none; }
 
-.money-green {
-  color: #2E7D32;
-  font-weight: 600;
-}
+.money-green { color: #2E7D32; font-weight: 600; }
+.money-gold { color: #2E7D32; font-weight: 600; }
 
 .modal-mask {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.45);
   z-index: 1000;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+}
+
+.modal-center {
+  align-items: center;
 }
 
 .modal-panel {
@@ -77,6 +75,14 @@ page {
   text-align: center;
   margin-bottom: 32rpx;
   color: #1B5E20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.modal-title-icon {
+  flex-shrink: 0;
 }
 
 .form-label {

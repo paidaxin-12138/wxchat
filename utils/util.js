@@ -1,3 +1,5 @@
+const fishData = require('./fishData.js');
+
 const STORAGE_KEYS = {
   CONFIG: 'userConfig',
   RECORDS: 'records',
@@ -13,17 +15,32 @@ const DEFAULT_CONFIG = {
   chargerPower: 20
 };
 
+const DEFAULT_USER = Object.assign({}, DEFAULT_CONFIG, fishData.getDefaultFishFarmFields(), {
+  subscribeWeekly: false,
+  rankId: 1,
+  badges: [],
+  totalMoneyAllTime: 0,
+  weeklyBadge: null,
+  lastWeekRank: 0,
+  nickName: '摸鱼达人',
+  avatarUrl: '',
+  totalExchangedRMB: 0,
+  lastFishFarmVisit: Date.now()
+});
+
 const TYPE_LABELS = {
   toilet: '上厕所',
   water: '喝水',
-  charge: '充电'
+  charge: '充电',
+  chat: '聊天八卦',
+  gossip: '聊天八卦'
 };
 
-const TYPE_ICONS = {
-  toilet: '🚽',
-  water: '💧',
-  charge: '⚡'
-};
+const icons = require('./icons.js');
+
+function getTypeIconClass(type) {
+  return icons.getIconClass(type);
+}
 
 function pad(n) {
   return n < 10 ? '0' + n : '' + n;
@@ -84,6 +101,10 @@ function generateId() {
   return Date.now() + '_' + Math.floor(Math.random() * 10000);
 }
 
+function getDefaultUser() {
+  return Object.assign({}, DEFAULT_USER);
+}
+
 function getConfig() {
   const stored = wx.getStorageSync(STORAGE_KEYS.CONFIG);
   if (stored && typeof stored === 'object') {
@@ -116,15 +137,25 @@ function getPerMinuteSalary(config) {
   return getHourlySalary(config) / 60;
 }
 
+function calculateTimeEarned(minutes, config) {
+  return roundMoney(minutes * getPerMinuteSalary(config));
+}
+
 function calculateToiletEarned(minutes, config) {
-  const perMin = getPerMinuteSalary(config);
-  return roundMoney(minutes * perMin);
+  return calculateTimeEarned(minutes, config);
+}
+
+function calculateChatEarned(minutes, config) {
+  return calculateTimeEarned(minutes, config);
+}
+
+function calculateGossipEarned(minutes, config) {
+  return calculateChatEarned(minutes, config);
 }
 
 function calculateWaterEarned(waterMl, config) {
   const c = config || getConfig();
-  const liters = waterMl / 1000;
-  return roundMoney(liters * c.waterPricePerLiter);
+  return roundMoney((waterMl / 1000) * c.waterPricePerLiter);
 }
 
 function calculateChargeEarned(durationMin, powerW, config) {
@@ -139,7 +170,7 @@ function roundMoney(n) {
 }
 
 function buildToiletDesc(durationMin) {
-  return '带薪拉屎 ' + durationMin + ' 分钟';
+  return '上厕所 ' + durationMin + '分钟';
 }
 
 function buildWaterDesc(waterMl) {
@@ -151,80 +182,50 @@ function buildChargeDesc(durationMin, powerW) {
   return '充电 ' + hours + ' ' + powerW + 'W';
 }
 
+function buildChatDesc(durationMin) {
+  return '聊天八卦 ' + durationMin + '分钟';
+}
+
+function buildGossipDesc(durationMin) {
+  return buildChatDesc(durationMin);
+}
+
 function getRecordsForMonth(records, yearMonth) {
   return records.filter(function (r) {
-    return getYearMonthFromTimestamp(r.timestamp) === yearMonth;
+    const ym = r.dateStr ? r.dateStr.substring(0, 7) : getYearMonthFromTimestamp(r.timestamp);
+    return ym === yearMonth;
   });
 }
 
 function getTotalForMonth(records, yearMonth) {
-  const list = getRecordsForMonth(records, yearMonth);
   let sum = 0;
-  for (let i = 0; i < list.length; i++) {
-    sum += list[i].moneyEarned || 0;
-  }
+  getRecordsForMonth(records, yearMonth).forEach(function (r) {
+    sum += r.moneyEarned || 0;
+  });
   return roundMoney(sum);
 }
 
-function addRecord(record) {
-  const records = getRecords();
-  records.unshift(record);
-  saveRecords(records);
-  return records;
+function buildRecord(type, fields, config) {
+  const ts = fields.timestamp || Date.now();
+  const d = new Date(ts);
+  const dateStr = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const timeStr = pad(d.getHours()) + ':' + pad(d.getMinutes());
+  const base = {
+    id: fields.id || generateId(),
+    type: type === 'gossip' ? 'chat' : type,
+    timestamp: ts,
+    dateStr: dateStr,
+    timeStr: timeStr,
+    moneyEarned: fields.moneyEarned,
+    detailDesc: fields.detailDesc
+  };
+  if (type === 'water') base.waterMl = fields.waterMl;
+  else base.durationMin = fields.durationMin;
+  if (type === 'charge') base.chargePowerW = fields.chargePowerW;
+  return base;
 }
 
-function deleteRecordById(id) {
-  let records = getRecords();
-  records = records.filter(function (r) {
-    return r.id !== id;
-  });
-  saveRecords(records);
-  return records;
-}
-
-function clearAllRecords() {
-  saveRecords([]);
-}
-
-function createSampleRecords() {
-  const config = getConfig();
-  const now = Date.now();
-  const yesterday = now - 24 * 60 * 60 * 1000;
-  const yesterday2 = yesterday - 2 * 60 * 60 * 1000;
-
-  const samples = [
-    {
-      id: generateId(),
-      type: 'toilet',
-      timestamp: yesterday2,
-      timeStr: formatDateTime(yesterday2),
-      durationMin: 8,
-      moneyEarned: calculateToiletEarned(8, config),
-      detailDesc: buildToiletDesc(8)
-    },
-    {
-      id: generateId(),
-      type: 'water',
-      timestamp: yesterday,
-      timeStr: formatDateTime(yesterday),
-      waterMl: 600,
-      moneyEarned: calculateWaterEarned(600, config),
-      detailDesc: buildWaterDesc(600)
-    }
-  ];
-  saveRecords(samples);
-}
-
-function initAppData() {
-  const initialized = wx.getStorageSync(STORAGE_KEYS.INITIALIZED);
-  if (!initialized) {
-    saveConfig(Object.assign({}, DEFAULT_CONFIG));
-    createSampleRecords();
-    wx.setStorageSync(STORAGE_KEYS.INITIALIZED, true);
-  }
-}
-
-function validatePositiveNumber(val, label) {
+function validatePositiveNumber(val) {
   const num = parseFloat(val);
   if (isNaN(num) || num <= 0) {
     return { valid: false, message: '请输入有效数值' };
@@ -235,7 +236,7 @@ function validatePositiveNumber(val, label) {
 function exportDataJson() {
   return JSON.stringify(
     {
-      config: getConfig(),
+      user: wx.getStorageSync('cloudUser') || getConfig(),
       records: getRecords(),
       exportTime: formatDateTime(Date.now())
     },
@@ -255,20 +256,65 @@ function animateNumber(context, from, to, duration, callback) {
     const elapsed = Date.now() - start;
     const progress = Math.min(elapsed / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
-    const current = roundMoney(from + diff * eased);
-    callback(current);
-    if (progress < 1) {
-      setTimeout(step, 16);
-    }
+    callback(roundMoney(from + diff * eased));
+    if (progress < 1) setTimeout(step, 16);
   }
   step();
+}
+
+function createSampleRecords(config) {
+  const c = config || getConfig();
+  const now = Date.now();
+  const yesterday = now - 86400000;
+  return [
+    buildRecord(
+      'toilet',
+      {
+        timestamp: yesterday - 7200000,
+        durationMin: 8,
+        moneyEarned: calculateToiletEarned(8, c),
+        detailDesc: buildToiletDesc(8)
+      },
+      c
+    ),
+    buildRecord(
+      'water',
+      {
+        timestamp: yesterday,
+        waterMl: 600,
+        moneyEarned: calculateWaterEarned(600, c),
+        detailDesc: buildWaterDesc(600)
+      },
+      c
+    ),
+    buildRecord(
+      'chat',
+      {
+        timestamp: yesterday - 1800000,
+        durationMin: 15,
+        moneyEarned: calculateChatEarned(15, c),
+        detailDesc: buildChatDesc(15)
+      },
+      c
+    )
+  ];
+}
+
+function initLocalData() {
+  if (wx.getStorageSync(STORAGE_KEYS.INITIALIZED)) return;
+  saveConfig(Object.assign({}, DEFAULT_CONFIG));
+  saveRecords(createSampleRecords());
+  wx.setStorageSync('cloudUser', getDefaultUser());
+  wx.setStorageSync(STORAGE_KEYS.INITIALIZED, true);
 }
 
 module.exports = {
   STORAGE_KEYS,
   DEFAULT_CONFIG,
+  DEFAULT_USER,
   TYPE_LABELS,
-  TYPE_ICONS,
+  getTypeIconClass,
+  pad,
   formatDateTime,
   formatShortTime,
   formatMonthLabel,
@@ -276,26 +322,31 @@ module.exports = {
   getYearMonthFromTimestamp,
   shiftYearMonth,
   generateId,
+  getDefaultUser,
   getConfig,
   saveConfig,
   getRecords,
   saveRecords,
   getHourlySalary,
   getPerMinuteSalary,
+  calculateTimeEarned,
   calculateToiletEarned,
+  calculateChatEarned,
+  calculateGossipEarned,
   calculateWaterEarned,
   calculateChargeEarned,
   roundMoney,
   buildToiletDesc,
   buildWaterDesc,
   buildChargeDesc,
+  buildChatDesc,
+  buildGossipDesc,
+  buildRecord,
   getRecordsForMonth,
   getTotalForMonth,
-  addRecord,
-  deleteRecordById,
-  clearAllRecords,
-  initAppData,
   validatePositiveNumber,
   exportDataJson,
-  animateNumber
+  animateNumber,
+  createSampleRecords,
+  initLocalData
 };

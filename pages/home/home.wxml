@@ -10,45 +10,67 @@
       <text class="ball-amount">¥{{displayTotal}}</text>
     </view>
     <text class="ball-hint">本月摸鱼赚了</text>
+    <button class="poster-btn" bindtap="generatePoster" loading="{{posterGenerating}}">📷 生成海报</button>
   </view>
 
-  <view class="action-row">
+  <view class="action-grid">
     <view class="action-btn" bindtap="openToilet">
-      <text class="action-emoji">🚽</text>
+      <type-icon type="toilet" size="lg" color="green" extra-class="action-icon" />
       <text class="action-label">上厕所</text>
     </view>
     <view class="action-btn" bindtap="openWater">
-      <text class="action-emoji">💧</text>
+      <type-icon type="water" size="lg" color="green" extra-class="action-icon" />
       <text class="action-label">喝水</text>
     </view>
     <view class="action-btn" bindtap="openCharge">
-      <text class="action-emoji">⚡</text>
+      <type-icon type="charge" size="lg" color="green" extra-class="action-icon" />
       <text class="action-label">充电</text>
+    </view>
+    <view class="action-btn" bindtap="openChat">
+      <type-icon type="chat" size="lg" color="green" extra-class="action-icon" />
+      <text class="action-label">聊天八卦</text>
     </view>
   </view>
 
   <view class="tip-card card">
     <text class="tip-title">摸鱼经济学</text>
-    <text class="tip-text">带薪拉屎、喝水、充电——把碎片时间变成真金白银。时薪来自你的月薪设置，在「我的」里可调整。</text>
+    <text class="tip-text">带薪拉屎、喝水、充电、聊天八卦——把碎片时间变成真金白银。时薪来自你的月薪设置，在「我的」里可调整。</text>
   </view>
   <text class="tip-footer">该程序也是本人摸鱼做出来的，祝各位摸鱼愉快</text>
+  <button class="weekly-btn" bindtap="generateWeeklyReport" loading="{{weeklyGenerating}}">📊 生成周报</button>
 </view>
 
-<!-- 上厕所 -->
+<canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+<canvas type="2d" id="weeklyReportCanvas" class="weekly-report-canvas"></canvas>
+
+<celebration-modal
+  show="{{celeShow}}"
+  title="{{celeTitle}}"
+  subtitle="{{celeSubtitle}}"
+  kind="{{celeKind}}"
+  bind:close="onCeleClose"
+></celebration-modal>
+
+<!-- modals -->
 <view class="modal-mask" wx:if="{{showToiletModal}}" bindtap="closeModal">
   <view class="modal-panel" catchtap="preventClose">
-    <view class="modal-title">🚽 带薪拉屎</view>
+    <view class="modal-title">
+      <type-icon type="toilet" size="md" color="dark" extra-class="modal-title-icon" />
+      <text>带薪拉屎</text>
+    </view>
     <view class="form-label">本次时长（分钟）</view>
-    <input class="form-input" type="digit" placeholder="请输入分钟数" value="{{toiletMinutes}}" bindinput="onToiletInput" />
-    <button class="btn-primary" bindtap="confirmToilet">确认摸鱼</button>
-    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal">取消</button>
+    <input class="form-input" type="digit" placeholder="请输入分钟数" value="{{toiletMinutes}}" bindinput="onToiletInput" disabled="{{submitting}}" />
+    <button class="btn-primary" bindtap="confirmToilet" disabled="{{submitting}}" loading="{{submitting}}">确认摸鱼</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal" disabled="{{submitting}}">取消</button>
   </view>
 </view>
 
-<!-- 喝水 -->
 <view class="modal-mask" wx:if="{{showWaterModal}}" bindtap="closeModal">
   <view class="modal-panel" catchtap="preventClose">
-    <view class="modal-title">💧 带薪喝水</view>
+    <view class="modal-title">
+      <type-icon type="water" size="md" color="dark" extra-class="modal-title-icon" />
+      <text>带薪喝水</text>
+    </view>
     <view class="form-label">选择杯数（1杯=300ml）</view>
     <view class="cup-row">
       <view class="cup-btn {{waterCup === 1 ? 'cup-active' : ''}}" data-cup="1" bindtap="selectWaterCup">1杯</view>
@@ -56,22 +78,37 @@
       <view class="cup-btn {{waterCup === 3 ? 'cup-active' : ''}}" data-cup="3" bindtap="selectWaterCup">3杯</view>
     </view>
     <view class="form-label">或自定义毫升</view>
-    <input class="form-input" type="digit" placeholder="毫升数" value="{{waterMl}}" bindinput="onWaterInput" />
-    <button class="btn-primary" bindtap="confirmWater">确认摸鱼</button>
-    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal">取消</button>
+    <input class="form-input" type="digit" placeholder="毫升数" value="{{waterMl}}" bindinput="onWaterInput" disabled="{{submitting}}" />
+    <button class="btn-primary" bindtap="confirmWater" disabled="{{submitting}}" loading="{{submitting}}">确认摸鱼</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal" disabled="{{submitting}}">取消</button>
   </view>
 </view>
 
-<!-- 充电 -->
+<view class="modal-mask" wx:if="{{showChatModal}}" bindtap="closeModal">
+  <view class="modal-panel" catchtap="preventClose">
+    <view class="modal-title">
+      <type-icon type="chat" size="md" color="dark" extra-class="modal-title-icon" />
+      <text>带薪八卦</text>
+    </view>
+    <view class="form-label">本次闲聊时长（分钟）</view>
+    <input class="form-input" type="digit" placeholder="请输入分钟数" value="{{chatMinutes}}" bindinput="onChatInput" disabled="{{submitting}}" />
+    <button class="btn-primary" bindtap="confirmChat" disabled="{{submitting}}" loading="{{submitting}}">确认摸鱼</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal" disabled="{{submitting}}">取消</button>
+  </view>
+</view>
+
 <view class="modal-mask" wx:if="{{showChargeModal}}" bindtap="closeModal">
   <view class="modal-panel" catchtap="preventClose">
-    <view class="modal-title">⚡ 带薪充电</view>
+    <view class="modal-title">
+      <type-icon type="charge" size="md" color="dark" extra-class="modal-title-icon" />
+      <text>带薪充电</text>
+    </view>
     <view class="form-label">充电时长（分钟）</view>
-    <input class="form-input" type="digit" placeholder="分钟数" value="{{chargeMinutes}}" bindinput="onChargeMinutesInput" />
+    <input class="form-input" type="digit" placeholder="分钟数" value="{{chargeMinutes}}" bindinput="onChargeMinutesInput" disabled="{{submitting}}" />
     <view class="form-label">充电器功率（瓦）</view>
-    <input class="form-input" type="digit" placeholder="默认来自设置" value="{{chargePower}}" bindinput="onChargePowerInput" />
-    <view class="preview-row">预估收益：<text class="money-green">+¥{{chargePreview}}</text></view>
-    <button class="btn-primary" bindtap="confirmCharge">确认摸鱼</button>
-    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal">取消</button>
+    <input class="form-input" type="digit" placeholder="默认来自设置" value="{{chargePower}}" bindinput="onChargePowerInput" disabled="{{submitting}}" />
+    <view class="preview-row">预估收益：<text class="money-gold">+¥{{chargePreview}}</text></view>
+    <button class="btn-primary" bindtap="confirmCharge" disabled="{{submitting}}" loading="{{submitting}}">确认摸鱼</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeModal" disabled="{{submitting}}">取消</button>
   </view>
 </view>

@@ -1,0 +1,37 @@
+.type-icon-img {
+  display: block;
+  flex-shrink: 0;
+}
+
+.icon-sm {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.icon-md {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.icon-lg {
+  width: 52rpx;
+  height: 52rpx;
+}
+
+.icon-xl {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.action-icon {
+  margin-bottom: 8rpx;
+}
+
+.modal-title-icon {
+  flex-shrink: 0;
+}
+
+.record-icon {
+  flex-shrink: 0;
+  margin-right: 16rpx;
+}

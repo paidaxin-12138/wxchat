@@ -1,0 +1,269 @@
+.farm-page {
+  min-height: 100vh;
+  padding-bottom: 180rpx;
+  background: linear-gradient(180deg, #E3F2FD 0%, #F5F7F0 40%);
+}
+
+.top-bar {
+  margin-top: 16rpx;
+}
+
+.balance-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.balance-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.balance-label {
+  font-size: 22rpx;
+  color: #888;
+}
+
+.balance-val {
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-top: 6rpx;
+}
+
+.coin-val {
+  color: #F57C00;
+}
+
+.exchange-btn {
+  background: linear-gradient(135deg, #42A5F5, #1565C0);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  border: none;
+}
+.exchange-btn::after { border: none; }
+
+.frozen-tip {
+  text-align: center;
+  color: #C62828;
+  font-size: 24rpx;
+  padding: 12rpx;
+}
+
+.device-scroll {
+  white-space: nowrap;
+  margin: 16rpx 0;
+}
+
+.device-list {
+  display: flex;
+  padding: 0 16rpx;
+  gap: 16rpx;
+}
+
+.device-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  min-width: 160rpx;
+}
+
+.device-emoji { font-size: 40rpx; }
+.device-name { font-size: 24rpx; color: #333; margin-top: 8rpx; }
+.device-lv { font-size: 22rpx; color: #1565C0; font-weight: 600; }
+.device-desc { font-size: 20rpx; color: #999; margin-top: 4rpx; }
+
+.pond-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1B5E20;
+  padding: 16rpx 32rpx 8rpx;
+}
+
+.pond-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 16rpx;
+  gap: 16rpx;
+}
+
+.fish-card {
+  width: calc(50% - 24rpx);
+  margin: 0;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.fish-emoji { font-size: 48rpx; display: block; text-align: center; }
+.fish-name { font-size: 26rpx; font-weight: 600; display: block; text-align: center; margin: 8rpx 0; }
+
+.bar-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.bar-label {
+  font-size: 20rpx;
+  color: #999;
+  width: 56rpx;
+  flex-shrink: 0;
+}
+
+.bar-bg {
+  flex: 1;
+  height: 12rpx;
+  background: #eee;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.growth-fill { background: #66BB6A; }
+.health-fill { background: #42A5F5; }
+.hunger-fill { background: #FFA726; }
+
+.sell-hint {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: #F57C00;
+  margin-top: 12rpx;
+}
+
+.empty-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200rpx;
+  border: 2rpx dashed #C8E6C9;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.empty-text { color: #bbb; font-size: 26rpx; }
+
+.egg-info, .feed-info {
+  margin: 16rpx 24rpx;
+  font-size: 26rpx;
+  color: #555;
+}
+
+.action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  padding: 16rpx 16rpx calc(16rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  gap: 12rpx;
+}
+
+.action-item {
+  flex: 1;
+  font-size: 24rpx;
+  background: #E8F5E9;
+  color: #2E7D32;
+  border-radius: 16rpx;
+  padding: 16rpx 0;
+  border: none;
+  font-weight: 500;
+}
+.action-item::after { border: none; }
+
+.btn-exchange-all {
+  width: 100%;
+  margin-bottom: 16rpx;
+  background: linear-gradient(135deg, #FFB74D, #F57C00);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  border: none;
+  font-weight: 600;
+}
+.btn-exchange-all::after { border: none; }
+
+.exchange-rate, .exchange-preview {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 16rpx;
+}
+
+.fish-detail-emoji {
+  font-size: 72rpx;
+  display: block;
+  text-align: center;
+}
+
+.fish-detail-rarity, .fish-detail-stat {
+  display: block;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.hatch-reveal-panel {
+  border-radius: 32rpx;
+  margin: 48rpx;
+  width: calc(100% - 96rpx);
+  text-align: center;
+}
+
+.hatch-reveal-badge {
+  font-size: 26rpx;
+  color: #F57C00;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.hatch-reveal-emoji {
+  font-size: 96rpx;
+  display: block;
+  margin: 8rpx 0 16rpx;
+}
+
+.hatch-reveal-rarity {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.hatch-reveal-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 28rpx;
+  line-height: 1.5;
+}
+
+.hatch-discard-btn {
+  margin-top: 16rpx;
+  color: #C62828;
+  border-color: #FFCDD2;
+}
+
+.fish-discard-btn {
+  color: #C62828;
+  border-color: #FFCDD2;
+}
+
+.pending-hatch-tip {
+  color: #F57C00;
+  font-size: 26rpx;
+}

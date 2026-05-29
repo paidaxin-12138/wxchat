@@ -1,0 +1,123 @@
+.shop-page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+}
+
+.shop-header {
+  margin-top: 16rpx;
+  text-align: center;
+}
+
+.shop-coins {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #F57C00;
+  display: block;
+}
+
+.shop-eggs {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 28rpx;
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1B5E20;
+  padding: 24rpx 32rpx 12rpx;
+}
+
+.mystery-egg-card {
+  margin-top: 8rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx 24rpx;
+}
+
+.egg-desc {
+  font-size: 24rpx;
+  color: #888;
+  margin: 8rpx 0 20rpx;
+  text-align: center;
+}
+
+.odds-list {
+  width: 100%;
+  margin-bottom: 24rpx;
+}
+
+.odds-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 16rpx;
+  font-size: 26rpx;
+  color: #444;
+  background: #F1F8E9;
+  border-radius: 12rpx;
+  margin-bottom: 8rpx;
+}
+
+.odds-pct {
+  font-weight: 600;
+  color: #2E7D32;
+}
+
+.buy-btn-lg {
+  width: 80%;
+  padding: 16rpx 0;
+  font-size: 28rpx;
+}
+
+.egg-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 16rpx;
+  gap: 16rpx;
+}
+
+.egg-card {
+  width: calc(50% - 24rpx);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.egg-emoji { font-size: 56rpx; }
+.egg-name { font-size: 28rpx; font-weight: 600; margin: 12rpx 0 8rpx; }
+.egg-price { font-size: 26rpx; color: #F57C00; margin-bottom: 16rpx; }
+
+.buy-btn {
+  font-size: 24rpx;
+  background: #E8F5E9;
+  color: #2E7D32;
+  border-radius: 32rpx;
+  padding: 8rpx 32rpx;
+  border: none;
+  font-weight: 600;
+}
+.buy-btn::after { border: none; }
+
+.feed-card {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.feed-emoji { font-size: 48rpx; margin-right: 20rpx; }
+.feed-body { flex: 1; }
+.feed-name { font-size: 28rpx; font-weight: 600; color: #333; display: block; }
+.feed-desc { font-size: 22rpx; color: #999; margin-top: 6rpx; display: block; }
+
+.shop-tip {
+  font-size: 24rpx;
+  color: #888;
+  line-height: 1.6;
+}

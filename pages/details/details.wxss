@@ -10,6 +10,32 @@
   margin-top: 16rpx;
 }
 
+.filter-right {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.share-btn {
+  font-size: 36rpx;
+  padding: 8rpx;
+}
+
+.poster-canvas {
+  position: fixed;
+  left: -9999px;
+  width: 375px;
+  height: 600px;
+}
+
+.weekly-report-canvas {
+  position: fixed;
+  left: -1000px;
+  top: -1000px;
+  width: 750px;
+  height: 1200px;
+}
+
 .filter-label {
   font-size: 28rpx;
   color: #666666;
@@ -57,7 +83,6 @@
 }
 
 .record-icon {
-  font-size: 44rpx;
   margin-right: 20rpx;
 }
 

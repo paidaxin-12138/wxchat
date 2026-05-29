@@ -1,0 +1,34 @@
+<view class="shop-page">
+  <view class="shop-header card">
+    <text class="shop-coins">🪙 摸鱼币：{{fishCoins}}</text>
+    <text class="shop-eggs">🥚 神秘鱼卵：{{eggCount}} 枚</text>
+  </view>
+
+  <view class="section-title">神秘鱼卵</view>
+  <view class="mystery-egg-card card">
+    <text class="egg-emoji">{{mysteryEgg.emoji}}</text>
+    <text class="egg-name">{{mysteryEgg.name}}</text>
+    <text class="egg-desc">买到手才知道是什么鱼，孵化后揭晓</text>
+    <view class="odds-list">
+      <view class="odds-item" wx:for="{{hatchOdds}}" wx:key="id">
+        <text>{{item.emoji}} {{item.name}}</text>
+        <text class="odds-pct">{{item.percent}}</text>
+      </view>
+    </view>
+    <button class="buy-btn buy-btn-lg" bindtap="buyEgg">购买 🪙 {{mysteryEgg.price}}</button>
+  </view>
+
+  <view class="section-title">饲料</view>
+  <view class="feed-card card">
+    <text class="feed-emoji">🌾</text>
+    <view class="feed-body">
+      <text class="feed-name">鱼饲料 x{{feedPack.amount}}</text>
+      <text class="feed-desc">每条鱼 +30 饱腹，+2 成长</text>
+    </view>
+    <button class="buy-btn" bindtap="buyFeed">🪙 {{feedPack.price}}</button>
+  </view>
+
+  <view class="shop-tip card">
+    <text>设备升级请返回养鱼场，点击设备图标进行升级。</text>
+  </view>
+</view>

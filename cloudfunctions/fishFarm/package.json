@@ -1,0 +1,9 @@
+{
+  "name": "fishFarm",
+  "version": "1.0.0",
+  "description": "养鱼场商店与养成操作",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

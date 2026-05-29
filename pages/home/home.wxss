@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40rpx 0 48rpx;
+  padding: 32rpx 0 24rpx;
 }
 
 .money-ball {
@@ -26,13 +26,8 @@
 }
 
 @keyframes ball-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
 
 .ball-amount {
@@ -43,23 +38,51 @@
 }
 
 .ball-hint {
-  margin-top: 24rpx;
+  margin-top: 20rpx;
   font-size: 28rpx;
   color: #689F38;
 }
 
-.action-row {
+.poster-btn {
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  background: #fff;
+  color: #2E7D32;
+  border-radius: 40rpx;
+  padding: 12rpx 32rpx;
+  border: 2rpx solid #C8E6C9;
+  line-height: 1.4;
+}
+.poster-btn::after { border: none; }
+
+.weekly-btn {
+  display: block;
+  margin: 8rpx auto 32rpx;
+  font-size: 28rpx;
+  background: linear-gradient(135deg, #66BB6A, #2E7D32);
+  color: #FFFFFF;
+  border-radius: 48rpx;
+  padding: 20rpx 64rpx;
+  border: none;
+  font-weight: 600;
+  line-height: 1.4;
+  box-shadow: 0 8rpx 20rpx rgba(46, 125, 50, 0.25);
+}
+.weekly-btn::after { border: none; }
+
+.action-grid {
   display: flex;
-  justify-content: space-around;
-  padding: 0 32rpx 32rpx;
+  flex-wrap: wrap;
+  padding: 0 24rpx 24rpx;
 }
 
 .action-btn {
-  flex: 1;
-  margin: 0 12rpx;
+  width: calc(50% - 16rpx);
+  margin: 8rpx;
+  box-sizing: border-box;
   background: #FFFFFF;
   border-radius: 24rpx;
-  padding: 32rpx 16rpx;
+  padding: 28rpx 16rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,23 +91,19 @@
 
 .action-btn:active {
   transform: scale(0.96);
-  box-shadow: 0 2rpx 8rpx rgba(46, 125, 50, 0.15);
 }
 
-.action-emoji {
-  font-size: 56rpx;
-  line-height: 1.2;
+.action-icon {
+  display: block;
+  margin-bottom: 8rpx;
+  line-height: 1;
 }
 
 .action-label {
-  margin-top: 12rpx;
+  margin-top: 10rpx;
   font-size: 26rpx;
   color: #2E7D32;
   font-weight: 500;
-}
-
-.tip-card {
-  margin-top: 16rpx;
 }
 
 .tip-title {
@@ -97,7 +116,7 @@
 
 .tip-text {
   font-size: 26rpx;
-  color: #666666;
+  color: #666;
   line-height: 1.6;
 }
 
@@ -107,7 +126,6 @@
   font-size: 22rpx;
   color: #9E9E9E;
   padding: 8rpx 32rpx 24rpx;
-  line-height: 1.5;
 }
 
 .cup-row {
@@ -123,7 +141,7 @@
   background: #F5F7F0;
   border-radius: 16rpx;
   font-size: 28rpx;
-  color: #555555;
+  color: #555;
   border: 2rpx solid transparent;
 }
 
@@ -138,5 +156,21 @@
   text-align: center;
   margin-bottom: 24rpx;
   font-size: 28rpx;
-  color: #666666;
+  color: #666;
+}
+
+.poster-canvas {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 375px;
+  height: 600px;
+}
+
+.weekly-report-canvas {
+  position: fixed;
+  left: -1000px;
+  top: -1000px;
+  width: 750px;
+  height: 1200px;
 }

@@ -1,0 +1,42 @@
+<view class="stats-page">
+  <view class="filter-tabs card">
+    <view class="tab {{filterType === 'week' ? 'on' : ''}}" data-type="week" bindtap="setFilter">本周</view>
+    <view class="tab {{filterType === 'month' ? 'on' : ''}}" data-type="month" bindtap="setFilter">本月</view>
+    <picker mode="date" fields="month" value="{{pickerValue}}" bindchange="onMonthChange">
+      <view class="tab {{filterType === 'custom' ? 'on' : ''}}">自定义 ▾</view>
+    </picker>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-label">累计金额</text>
+      <text class="stat-val">¥{{metrics.totalMoney}}</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-label">摸鱼次数</text>
+      <text class="stat-val">{{metrics.totalCount}}</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-label">日均金额</text>
+      <text class="stat-val">¥{{metrics.avgDaily}}</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-label">单日最高</text>
+      <text class="stat-val">¥{{metrics.maxDaily}}</text>
+    </view>
+  </view>
+
+  <view class="chart-card card" wx:if="{{hasData}}">
+    <text class="chart-title">近7日金额趋势</text>
+    <ec-canvas canvasId="lineChart" option="{{lineOption}}"></ec-canvas>
+  </view>
+  <view class="chart-card card" wx:if="{{hasData}}">
+    <text class="chart-title">类型金额占比</text>
+    <ec-canvas canvasId="pieChart" option="{{pieOption}}"></ec-canvas>
+  </view>
+  <view class="chart-card card" wx:if="{{hasData}}">
+    <text class="chart-title">本周工作日摸鱼时长（分钟）</text>
+    <ec-canvas canvasId="barChart" option="{{barOption}}"></ec-canvas>
+  </view>
+  <view wx:if="{{!hasData}}" class="empty-tip">暂无统计数据，去主页摸个鱼吧~</view>
+</view>

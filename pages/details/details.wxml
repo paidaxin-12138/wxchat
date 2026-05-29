@@ -1,18 +1,22 @@
 <view class="details-page">
   <view class="filter-bar card">
     <text class="filter-label">筛选月份</text>
-    <picker mode="date" fields="month" value="{{pickerValue}}" bindchange="onMonthChange">
-      <view class="picker-value">{{monthLabel}} ▾</view>
-    </picker>
+    <view class="filter-right">
+      <text class="share-btn" bindtap="generateWeeklyReport">📊</text>
+      <text class="share-btn" bindtap="generatePoster">📷</text>
+      <picker mode="date" fields="month" value="{{pickerValue}}" bindchange="onMonthChange">
+        <view class="picker-value">{{monthLabel}} ▾</view>
+      </picker>
+    </view>
   </view>
 
   <block wx:if="{{records.length > 0}}">
     <view class="record-list">
-      <view class="record-wrap" wx:for="{{records}}" wx:key="id">
+      <view class="record-wrap" wx:for="{{records}}" wx:key="recordId">
         <movable-area class="movable-area">
-          <movable-view class="movable-view" direction="horizontal" x="{{swipeOffsets[item.id] || 0}}" damping="50" friction="10" out-of-bounds data-id="{{item.id}}" bindchange="onSwipeChange">
+          <movable-view class="movable-view" direction="horizontal" x="{{swipeOffsets[item.recordId] || 0}}" damping="50" friction="10" out-of-bounds data-id="{{item.recordId}}" bindchange="onSwipeChange">
             <view class="record-card">
-              <text class="record-icon">{{item.icon}}</text>
+              <type-icon type="{{item.type}}" size="md" color="green" extra-class="record-icon" />
               <view class="record-body">
                 <text class="record-time">{{item.shortTime}}</text>
                 <text class="record-desc">{{item.detailDesc}}</text>
@@ -20,7 +24,7 @@
               <text class="record-money money-green">+¥{{item.moneyStr}}</text>
             </view>
           </movable-view>
-          <view class="delete-btn" data-id="{{item.id}}" bindtap="onDeleteTap">删除</view>
+          <view class="delete-btn" data-id="{{item.recordId}}" bindtap="onDeleteTap">删除</view>
         </movable-area>
       </view>
     </view>
@@ -32,3 +36,6 @@
     <text class="footer-amount money-green">¥{{monthTotal}}</text>
   </view>
 </view>
+
+<canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+<canvas type="2d" id="weeklyReportCanvas" class="weekly-report-canvas"></canvas>

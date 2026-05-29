@@ -1,0 +1,30 @@
+<image
+  wx:if="{{type === 'toilet'}}"
+  class="type-icon-img icon-{{size}} {{extraClass}}"
+  src="/images/icons/toilet.png"
+  mode="aspectFit"
+/>
+<image
+  wx:elif="{{type === 'water'}}"
+  class="type-icon-img icon-{{size}} {{extraClass}}"
+  src="/images/icons/water.png"
+  mode="aspectFit"
+/>
+<image
+  wx:elif="{{type === 'charge'}}"
+  class="type-icon-img icon-{{size}} {{extraClass}}"
+  src="/images/icons/charge.png"
+  mode="aspectFit"
+/>
+<image
+  wx:elif="{{type === 'chat' || type === 'gossip'}}"
+  class="type-icon-img icon-{{size}} {{extraClass}}"
+  src="/images/icons/chat.png"
+  mode="aspectFit"
+/>
+<image
+  wx:else
+  class="type-icon-img icon-{{size}} {{extraClass}}"
+  src="/images/icons/default.png"
+  mode="aspectFit"
+/>

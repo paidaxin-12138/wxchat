@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "type-icon": "/components/type-icon/type-icon"
+  },
   "navigationBarTitleText": "摸鱼明细"
 }

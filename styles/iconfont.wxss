@@ -1,0 +1,64 @@
+/* 字体通过 app.js 中 wx.loadFontFace（base64）加载，wxss 禁止使用本地 @font-face */
+
+/* 推荐：<text> 直接承载字形，比 view::before 更稳定 */
+.icon-text {
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  display: block;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon-text.icon-remix {
+  font-family: 'remixicon' !important;
+}
+
+.icon-text.icon-moyu {
+  font-family: 'moyuicon' !important;
+}
+
+.iconfont {
+  font-family: 'remixicon' !important;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+  overflow: visible;
+  box-sizing: content-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.iconfont::before {
+  display: block;
+  line-height: 1;
+  font-family: 'remixicon' !important;
+}
+
+.iconfont.icon-toilet::before {
+  font-family: 'moyuicon' !important;
+  content: '\f101';
+}
+.icon-water::before { content: '\ec06'; }
+.icon-charge::before { content: '\eaaa'; }
+.icon-chat::before { content: '\eb51'; }
+.icon-default::before { content: '\ecf1'; }
+
+.icon-sm { font-size: 36rpx; width: 36rpx; height: 36rpx; min-height: 36rpx; }
+.icon-md { font-size: 44rpx; width: 44rpx; height: 44rpx; min-height: 44rpx; }
+.icon-lg { font-size: 52rpx; width: 52rpx; height: 52rpx; min-height: 52rpx; }
+.icon-xl { font-size: 64rpx; width: 64rpx; height: 64rpx; min-height: 64rpx; }
+
+.icon-green { color: #2E7D32; }
+.icon-muted { color: #689F38; }
+.icon-dark { color: #1B5E20; }
+
+@media (prefers-color-scheme: dark) {
+  .icon-green { color: #81C784; }
+  .icon-muted { color: #A5D6A7; }
+  .icon-dark { color: #C8E6C9; }
+}

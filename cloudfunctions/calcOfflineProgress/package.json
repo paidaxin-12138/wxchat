@@ -1,0 +1,9 @@
+{
+  "name": "calcOfflineProgress",
+  "version": "1.0.0",
+  "description": "养鱼场离线进度计算",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

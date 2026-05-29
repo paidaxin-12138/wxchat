@@ -1,0 +1,97 @@
+.rank-page {
+  padding-bottom: 40rpx;
+}
+
+.total-card {
+  text-align: center;
+  padding: 40rpx;
+  margin-top: 16rpx;
+  background: linear-gradient(135deg, #66BB6A, #2E7D32);
+}
+
+.total-label {
+  display: block;
+  font-size: 26rpx;
+  color: #E8F5E9;
+}
+
+.total-val {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 12rpx 0;
+}
+
+.rank-now {
+  font-size: 28rpx;
+  color: #C8E6C9;
+  font-weight: 600;
+}
+
+.section-title {
+  padding: 20rpx 32rpx 8rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.rank-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.rank-item:last-child { border-bottom: none; }
+
+.rank-item.locked { opacity: 0.45; }
+
+.rank-id {
+  width: 80rpx;
+  font-size: 24rpx;
+  color: #689F38;
+  font-weight: 600;
+}
+
+.rank-body { flex: 1; }
+
+.rank-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.rank-th {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.rank-status { font-size: 32rpx; }
+
+.badge-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.badge-item:last-child { border-bottom: none; }
+
+.badge-icon {
+  width: 48rpx;
+  font-size: 28rpx;
+}
+
+.badge-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.badge-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}

@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "celebration-modal": "/components/celebration-modal/celebration-modal",
+    "type-icon": "/components/type-icon/type-icon"
+  },
   "navigationBarTitleText": "摸鱼经济学"
 }

@@ -1,0 +1,62 @@
+<view class="leaderboard-page">
+  <view class="hero card">
+    <text class="hero-title">🏆 每周宗师榜</text>
+    <text class="hero-sub">每周一凌晨定榜，累计摸鱼总额前50名获「摸鱼宗师」称号</text>
+  </view>
+
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 0 ? 'tab-active' : ''}}" data-tab="0" bindtap="switchTab">本周宗师榜</view>
+    <view class="tab-item {{activeTab === 1 ? 'tab-active' : ''}}" data-tab="1" bindtap="switchTab">历史总榜</view>
+  </view>
+
+  <block wx:if="{{activeTab === 0}}">
+    <view class="week-label" wx:if="{{weeklyWeekLabel}}">{{weeklyWeekLabel}}</view>
+    <view class="empty-tip" wx:if="{{weeklyEmpty}}">
+      <text wx:if="{{!cloudEnabled}}">请确认已开通云开发并重新编译</text>
+      <block wx:else>
+        <text>暂无定榜数据。可先查看「历史总榜」，或手动触发定榜。</text>
+        <button class="settle-btn" bindtap="runSettlement" loading="{{settling}}">立即定榜（测试）</button>
+      </block>
+    </view>
+    <view class="rank-list card" wx:if="{{!weeklyEmpty}}">
+      <view class="rank-row" wx:for="{{weeklyList}}" wx:key="rank">
+        <text class="rank-no">{{item.rankDisplay}}</text>
+        <image class="rank-avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+        <view class="rank-body">
+          <text class="rank-name">{{item.nickName}}</text>
+          <text class="rank-badge">👑 摸鱼宗师</text>
+        </view>
+        <text class="rank-money money-green">{{item.moneyDisplay}}</text>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{activeTab === 1}}">
+    <view class="empty-tip" wx:if="{{allTimeList.length === 0 && !allTimeLoading}}">
+      <text wx:if="{{loadError}}">{{loadError}}</text>
+      <text wx:elif="{{!cloudEnabled}}">请确认已开通云开发并重新编译</text>
+      <text wx:else>暂无排行数据，先去主页记一笔摸鱼吧</text>
+    </view>
+    <view class="rank-list card" wx:if="{{allTimeList.length > 0}}">
+      <view class="rank-row" wx:for="{{allTimeList}}" wx:key="rank">
+        <text class="rank-no">{{item.rankDisplay}}</text>
+        <image class="rank-avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+        <view class="rank-body">
+          <text class="rank-name">{{item.nickName}}</text>
+          <text class="rank-badge" wx:if="{{item.weeklyBadge}}">👑 {{item.weeklyBadge}}</text>
+        </view>
+        <text class="rank-money money-green">{{item.moneyDisplay}}</text>
+      </view>
+      <view class="load-more" wx:if="{{allTimeLoading}}">加载中...</view>
+      <view class="load-more" wx:elif="{{!allTimeHasMore && allTimeList.length > 0}}">已显示前 {{allTimeList.length}} 名</view>
+    </view>
+
+    <view class="my-rank card" wx:if="{{myRank}}">
+      <text class="my-rank-label">我的排名</text>
+      <view class="my-rank-row">
+        <text class="my-rank-no">第 {{myRank.rank}} 名</text>
+        <text class="my-rank-money money-green">{{myRank.moneyDisplay}}</text>
+      </view>
+    </view>
+  </block>
+</view>

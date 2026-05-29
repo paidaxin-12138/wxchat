@@ -1,10 +1,37 @@
 <view class="profile-page">
   <view class="user-card card">
     <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-      <image class="avatar" src="{{avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+      <image class="avatar" src="{{avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" binderror="onAvatarError" />
     </button>
-    <input class="nickname-input" type="nickname" placeholder="点击设置昵称" value="{{nickName}}" bindinput="onNicknameInput" bindblur="onNicknameBlur" />
+    <input class="nickname-input" type="nickname" placeholder="点击设置微信昵称" value="{{nickName}}" bindinput="onNicknameInput" bindblur="onNicknameBlur" />
+    <view class="login-row">
+      <text class="login-status {{isLoggedIn ? 'login-on' : ''}}">{{isLoggedIn ? '已绑定微信' : '未绑定微信'}}</text>
+      <button class="profile-btn" bindtap="onWeChatLogin" loading="{{loginLoading}}" wx:if="{{!isLoggedIn}}">微信登录</button>
+      <button class="profile-btn profile-btn-ghost" bindtap="onLogout" wx:if="{{isLoggedIn}}">解除绑定</button>
+    </view>
+    <text class="avatar-hint">点击头像使用微信头像</text>
     <text class="salary-hint">时薪约 ¥{{hourlyStr}} · 每分钟 ¥{{perMinStr}}</text>
+  </view>
+
+  <view class="rank-card card" bindtap="goRank">
+    <view class="rank-head">
+      <text class="rank-title">🏆 {{rankTitle}}</text>
+      <text class="rank-arrow">查看全部 ›</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{rankProgress}}%"></view>
+    </view>
+    <text class="progress-hint">距下一段位「{{nextRankTitle}}」 {{rankProgress}}%</text>
+  </view>
+
+  <view class="honor-card card" bindtap="goLeaderboard">
+    <text class="honor-text {{hasWeeklyBadge ? 'honor-active' : ''}}">{{weeklyHonorText}}</text>
+    <text class="honor-arrow">查看排行 ›</text>
+  </view>
+
+  <view class="honor-card card" bindtap="goStats">
+    <text class="honor-text">📊 摸鱼数据统计</text>
+    <text class="honor-arrow">查看图表 ›</text>
   </view>
 
   <view class="section-title">收益参数设置</view>
@@ -20,18 +47,36 @@
 
   <view class="section-title">数据管理</view>
   <view class="settings-card card">
-    <view class="setting-item danger-item" bindtap="clearRecords">
-      <text class="setting-label danger-text">清空所有摸鱼记录</text>
-    </view>
-    <view class="setting-item" bindtap="exportData">
-      <text class="setting-label">导出数据（JSON）</text>
-      <text class="setting-arrow">›</text>
+    <view class="setting-item company-item" bindtap="clearRecords" hover-class="company-item-hover">
+      <text class="setting-label company-text">我要为公司着想</text>
     </view>
   </view>
 
   <view class="about-card card">
     <text class="about-title">关于 · 摸鱼经济学 v{{version}}</text>
-    <text class="about-text">带薪拉屎、喝水、充电——把上班碎片时间量化成「真实收益」。时薪来自你的月薪；喝水按桶装水价；充电按公司电费帮你省下的钱。理性摸鱼，快乐打工。</text>
+    <view class="about-text">带薪拉屎、喝水、充电、聊天八卦——把上班碎片时间量化成「真实收益」。支持段位成就、统计图表与摸鱼海报。理性摸鱼，快乐打工。</view>
+  </view>
+
+  <view class="profile-footer card">
+    <text class="footer-slogan">摸鱼经济学，带薪就是赚！</text>
+    <view class="footer-bottom">
+      <image class="footer-qrcode" src="/images/qrcode.png" mode="aspectFit" />
+      <view class="footer-stamp">
+        <text>摸鱼</text>
+        <text>认证</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="modal-mask modal-center" wx:if="{{showClearModal}}" bindtap="closeClearModal">
+  <view class="clear-modal-panel" catchtap="preventClose">
+    <text class="clear-modal-title">摸鱼之神降临</text>
+    <text class="clear-modal-content">伟大的摸鱼之神发现了你的意志不坚定，现在重新决定你是否要放弃摸鱼，走向歧途</text>
+    <view class="clear-modal-actions">
+      <button class="clear-btn-confirm" bindtap="confirmClearRecords">公司是我家</button>
+      <button class="clear-btn-cancel" bindtap="closeClearModal">再摸一会</button>
+    </view>
   </view>
 </view>
 

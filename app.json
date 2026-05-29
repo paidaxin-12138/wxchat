@@ -2,7 +2,12 @@
   "pages": [
     "pages/home/home",
     "pages/details/details",
-    "pages/profile/profile"
+    "pages/fishfarm/fishfarm",
+    "pages/fishfarm/shop/shop",
+    "pages/stats/stats",
+    "pages/leaderboard/leaderboard",
+    "pages/profile/profile",
+    "pages/rank/rank"
   ],
   "window": {
     "navigationBarTitleText": "摸鱼经济学",
@@ -28,6 +33,18 @@
         "text": "明细",
         "iconPath": "images/tab-details.png",
         "selectedIconPath": "images/tab-details-active.png"
+      },
+      {
+        "pagePath": "pages/fishfarm/fishfarm",
+        "text": "养鱼场",
+        "iconPath": "images/tab-fishfarm.png",
+        "selectedIconPath": "images/tab-fishfarm-active.png"
+      },
+      {
+        "pagePath": "pages/leaderboard/leaderboard",
+        "text": "排行",
+        "iconPath": "images/tab-leaderboard.png",
+        "selectedIconPath": "images/tab-leaderboard-active.png"
       },
       {
         "pagePath": "pages/profile/profile",

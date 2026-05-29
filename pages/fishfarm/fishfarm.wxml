@@ -1,0 +1,132 @@
+<view class="farm-page">
+  <view class="top-bar card">
+    <view class="balance-row">
+      <view class="balance-item">
+        <text class="balance-label">可兑换人民币</text>
+        <text class="balance-val money-green">¥{{totalMoney}}</text>
+      </view>
+      <view class="balance-item">
+        <text class="balance-label">摸鱼币</text>
+        <text class="balance-val coin-val">🪙 {{fishCoins}}</text>
+      </view>
+      <view class="balance-item">
+        <text class="balance-label">鱼缸</text>
+        <text class="balance-val">🐠 {{fishCount}}/{{capacity}}</text>
+      </view>
+    </view>
+    <button class="exchange-btn" bindtap="openExchange">兑换摸鱼币</button>
+  </view>
+
+  <view class="frozen-tip" wx:if="{{cheatFrozen}}">⚠️ 摸鱼币奖励减半中（违规冻结），仍可正常摸鱼记录</view>
+
+  <scroll-view class="device-scroll" scroll-x enable-flex>
+    <view class="device-list">
+      <view class="device-card" wx:for="{{devices}}" wx:key="key" data-key="{{item.key}}" bindtap="onDeviceTap">
+        <text class="device-emoji">{{item.emoji}}</text>
+        <text class="device-name">{{item.name}}</text>
+        <text class="device-lv">Lv.{{item.level}}</text>
+        <text class="device-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="pond-title">我的鱼塘</view>
+  <view class="pond-grid">
+    <view
+      class="fish-card card"
+      wx:for="{{fishes}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onFishTap"
+    >
+      <text class="fish-emoji">{{item.emoji}}</text>
+      <text class="fish-name" style="color:{{item.rarityColor}}">{{item.name}}</text>
+      <view class="bar-wrap">
+        <text class="bar-label">成长</text>
+        <view class="bar-bg"><view class="bar-fill growth-fill" style="width:{{item.growthPct}}%"></view></view>
+      </view>
+      <view class="bar-wrap">
+        <text class="bar-label">健康</text>
+        <view class="bar-bg"><view class="bar-fill health-fill" style="width:{{item.health}}%"></view></view>
+      </view>
+      <view class="bar-wrap">
+        <text class="bar-label">饱腹</text>
+        <view class="bar-bg"><view class="bar-fill hunger-fill" style="width:{{item.hunger}}%"></view></view>
+      </view>
+      <text class="sell-hint" wx:if="{{item.canSell}}">可卖出 {{item.sellPriceDisplay}} 币</text>
+    </view>
+    <view class="fish-card card empty-slot" wx:for="{{capacity - fishCount}}" wx:key="*this" wx:if="{{fishCount < capacity}}">
+      <text class="empty-text">空位</text>
+    </view>
+  </view>
+
+  <view class="egg-info card" wx:if="{{eggCount > 0}}">
+    <text>🥚 待孵化神秘鱼卵：{{eggCount}} 枚</text>
+  </view>
+  <view class="egg-info card pending-hatch-tip" wx:if="{{hasPendingHatch && !showHatchReveal}}">
+    <text>✨ 有未处理的孵化结果，点击「孵化」查看</text>
+  </view>
+  <view class="feed-info">饲料库存：{{feed}} 份</view>
+
+  <view class="action-bar">
+    <button class="action-item" bindtap="goShop">买鱼卵</button>
+    <button class="action-item" bindtap="onHatch" disabled="{{eggCount === 0 && !hasPendingHatch}}">孵化</button>
+    <button class="action-item" bindtap="goShop">买饲料</button>
+    <button class="action-item" bindtap="onFeedAll" disabled="{{feed === 0}}">批量喂食</button>
+  </view>
+</view>
+
+<!-- 兑换弹窗 -->
+<view class="modal-mask" wx:if="{{showExchange}}" bindtap="closeExchange">
+  <view class="modal-panel" catchtap="preventClose">
+    <view class="modal-title">人民币 → 摸鱼币</view>
+    <text class="exchange-rate">汇率：1 元 = {{exchangeRate}} 摸鱼币</text>
+    <view class="form-label">兑换金额（元）</view>
+    <input class="form-input" type="digit" placeholder="不超过 ¥{{totalMoney}}" value="{{exchangeAmount}}" bindinput="onExchangeInput" />
+    <text class="exchange-preview">可获得 🪙 {{exchangePreview}} 摸鱼币</text>
+    <button class="btn-exchange-all" bindtap="exchangeAll">一键兑换（全部 ¥{{totalMoney}}）</button>
+    <button class="btn-primary" bindtap="confirmExchange">确认兑换</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeExchange">取消</button>
+  </view>
+</view>
+
+<!-- 鱼详情 -->
+<view class="modal-mask" wx:if="{{showFishDetail}}" bindtap="closeFishDetail">
+  <view class="modal-panel" catchtap="preventClose">
+    <text class="fish-detail-emoji">{{selectedFish.emoji}}</text>
+    <view class="modal-title">{{selectedFish.name}}</view>
+    <text class="fish-detail-rarity" style="color:{{selectedFish.rarityColor}}">{{selectedFish.rarityLabel}}</text>
+    <text class="fish-detail-stat">成长 {{selectedFish.growth}}/{{selectedFish.maxGrowth}}</text>
+    <text class="fish-detail-stat">健康 {{selectedFish.health}} · 饱腹 {{selectedFish.hunger}}</text>
+    <button class="btn-primary" bindtap="feedOneFish">喂食（-1 饲料）</button>
+    <button class="btn-primary" wx:if="{{selectedFish.canSell}}" style="margin-top:16rpx" bindtap="sellFish">卖出 +{{selectedFish.sellPriceDisplay}} 币</button>
+    <button class="btn-ghost fish-discard-btn" style="margin-top:16rpx" bindtap="discardFish">趁摸鱼之神没看见，丢弃</button>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeFishDetail">关闭</button>
+  </view>
+</view>
+
+<!-- 孵化揭晓 -->
+<view class="modal-mask modal-center" wx:if="{{showHatchReveal}}">
+  <view class="modal-panel hatch-reveal-panel" catchtap="preventClose">
+    <view class="hatch-reveal-badge" wx:if="{{hatchRevealFish.isAngelfish}}">🎉 天降神鱼</view>
+    <text class="hatch-reveal-emoji">{{hatchRevealFish.emoji}}</text>
+    <view class="modal-title">孵化出了 {{hatchRevealFish.name}}</view>
+    <text class="hatch-reveal-rarity" style="color:{{hatchRevealFish.rarityColor}}">{{hatchRevealFish.rarityLabel}}</text>
+    <text class="hatch-reveal-hint" wx:if="{{hatchTankFull}}">鱼缸已满，请先卖出或升级后再培养</text>
+    <text class="hatch-reveal-hint" wx:else>选择培养放入鱼缸，或丢弃放生</text>
+    <button class="btn-primary" bindtap="onHatchKeep" disabled="{{hatchTankFull}}">培养</button>
+    <button class="btn-ghost hatch-discard-btn" bindtap="onHatchDiscard">丢弃</button>
+  </view>
+</view>
+
+<!-- 设备升级 -->
+<view class="modal-mask" wx:if="{{showDevice}}" bindtap="closeDevice">
+  <view class="modal-panel" catchtap="preventClose">
+    <text class="fish-detail-emoji">{{selectedDevice.emoji}}</text>
+    <view class="modal-title">{{selectedDevice.name}} Lv.{{selectedDevice.level}}</view>
+    <text class="fish-detail-stat">{{selectedDevice.desc}}</text>
+    <button class="btn-primary" wx:if="{{selectedDevice.upgradeCost}}" bindtap="upgradeDevice">升级（{{selectedDevice.upgradeCost}} 币）</button>
+    <text class="fish-detail-stat" wx:else>已满级</text>
+    <button class="btn-ghost" style="margin-top:16rpx" bindtap="closeDevice">关闭</button>
+  </view>
+</view>

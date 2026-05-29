@@ -1,0 +1,79 @@
+.cele-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cele-panel {
+  width: 560rpx;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 48rpx 40rpx;
+  text-align: center;
+  box-shadow: 0 16rpx 48rpx rgba(46, 125, 50, 0.25);
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.cele-emoji { font-size: 80rpx; display: block; }
+.cele-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1B5E20;
+  margin-top: 16rpx;
+}
+.cele-sub {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 12rpx;
+}
+.cele-btn {
+  margin-top: 32rpx;
+  background: linear-gradient(135deg, #66BB6A, #2E7D32);
+  color: #FFFFFF;
+  border-radius: 48rpx;
+  font-weight: 600;
+  border: none;
+}
+.cele-btn::after { border: none; }
+
+.confetti-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti {
+  position: absolute;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 4rpx;
+  animation: fall 2s ease-in infinite;
+}
+.c1 { left: 10%; background: #66BB6A; animation-delay: 0s; }
+.c2 { left: 25%; background: #A5D6A7; animation-delay: 0.2s; }
+.c3 { left: 40%; background: #42A5F5; animation-delay: 0.4s; }
+.c4 { left: 55%; background: #81C784; animation-delay: 0.1s; }
+.c5 { left: 70%; background: #FFD54F; animation-delay: 0.3s; }
+.c6 { left: 85%; background: #2E7D32; animation-delay: 0.5s; }
+
+@keyframes fall {
+  0% { top: -20rpx; transform: rotate(0deg); opacity: 1; }
+  100% { top: 100%; transform: rotate(720deg); opacity: 0.3; }
+}
