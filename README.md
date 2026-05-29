@@ -2,6 +2,20 @@
 
 微信小程序：记录上班摸鱼（上厕所、喝水、充电、聊天八卦），换算成「摸鱼收入」，并可在养鱼场用摸鱼币养鱼、孵化、排行竞技。
 
+## 界面预览
+
+| 主页 | 养鱼场 |
+|:---:|:---:|
+| ![主页](images/screenshots/home.png) | ![养鱼场](images/screenshots/fishfarm.png) |
+
+| 宗师榜 | 我的 |
+|:---:|:---:|
+| ![宗师榜](images/screenshots/leaderboard.png) | ![我的](images/screenshots/profile.png) |
+
+**摸鱼周报**
+
+![摸鱼周报](images/screenshots/weekly-report.png)
+
 ## 功能概览
 
 | 模块 | 说明 |
